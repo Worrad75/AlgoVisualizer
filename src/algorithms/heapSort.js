@@ -1,63 +1,81 @@
-function getLeftChildIndex(idx) {
-    return (idx * 2) + 1
+let animations = []
+
+function buildMaxHeap(array) {
+    // console.log("in buildMaxHeap")
+    var i;
+    i = array.length / 2 - 1;
+    i = Math.floor(i);
+
+    while (i >= 0) {
+        heapify(array, i, array.length);
+        i -= 1;
+    }
 }
 
-function getRightChildIndex(idx) {
-    return (idx * 2) + 2
+
+function heapify(heap, i, max) {
+    console.log("in heapify")
+    animations.push("heapify")
+
+    var index, leftIdx, rightIdx;
+    while (i < max) {
+        index = i;
+
+        leftIdx = 2 * i + 1;
+        rightIdx = leftIdx + 1;
+        leftIdx = i * 2 + 1;
+        rightIdx = i * 2 + 2;
+
+        if (leftIdx < max && heap[leftIdx] > heap[index]) {
+            index = leftIdx;
+        }
+
+        if (rightIdx < max && heap[rightIdx] > heap[index]) {
+            index = rightIdx;
+        }
+
+        if (index === i) {
+            return;
+        }
+
+        swap(heap, i, index);
+
+        i = index;
+    }
 }
 
-function getParentIndex(idx) {
-    return (idx - 2) / 2
-}
+function swap(items, idx1, idx2) {
+    console.log("in swap")
+    animations.push("swap")
 
-function hasLeftChild(idx, items) {
-    return getLeftChildIndex(idx) < items.length
-}
-
-function hasRightChild(idx, items) {
-    return getRightChildIndex(idx) < items.length
-}
-
-function hasParent(idx, items) {
-    return getParentIndex(idx) < items.length
-}
-
-function getLeftChild(idx, items) {
-    return items[getLeftChildIndex(idx)]
-}
-
-function getRightChild(idx, items) {
-    return items[getRightChildIndex(idx)]
-}
-
-function getParent(idx, items) {
-    return items[getParentIndex(idx)]
-}
-
-function swap(idx1, idx2, items) {
-    [items[idx1], items[idx2]] = [items[idx2], items[idx1]];
-    // let temp = items[idx1];
-    // items[idx1] = items[idx2]
-    // items[idx2] = temp
+    let temp = items[idx1];
+    items[idx1] = items[idx2]
+    items[idx2] = temp
 }
 
 ////////////////////////////////////////////////////////////////////
 
-function remove(items) {
-    let smallest = 0;
-    items.pop()
-    return [items, smallest];
-}
 
-function heapify(items) {
-    return items;
-}
+export function heapSort(array) {       // will return a list of animations
+    console.log("in heapSort")
+    // Build our max heap.
+    buildMaxHeap(array);
 
-export function heapSort(items) {
-    let heap = heapify(items);
-    const result = [];
-    while (items.length > 1) {
-        let data = remove(items)
+    // Find last element.
+    let lastElement = array.length - 1;
+
+    // Continue heap sorting until we have
+    // just one element left in the array.
+    while (lastElement > 0) {
+        swap(array, 0, lastElement);
+        
+        heapify(array, 0, lastElement);
+        
+        lastElement -= 1
+        console.log("decrementing")
+        animations.push("decrement")
+        
     }
-    return result
+
+    return animations;
 }

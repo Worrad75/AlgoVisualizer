@@ -1,7 +1,9 @@
 .array-cont {
-    position: absolute;
-    left: 100px;
-    top: 100px;
+    position: relative;
+    /* top: 100px; */
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
 }
 
 .array-bar {

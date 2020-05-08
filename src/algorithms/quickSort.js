@@ -1,13 +1,13 @@
 function swap(arr, i, j) {
-    var temp = arr[i];
+    let temp = arr[i];
     arr[i] = arr[j];
     arr[j] = temp;
 }
 function partition(arr, pivot, left, right) {
-    var pivotValue = arr[pivot],
+    let pivotValue = arr[pivot],
         partitionIndex = left;
 
-    for (var i = left; i < right; i++) {
+    for (let i = left; i < right; i++) {
         if (arr[i] < pivotValue) {
             swap(arr, i, partitionIndex);
             partitionIndex++;
@@ -18,9 +18,7 @@ function partition(arr, pivot, left, right) {
 }
 
 export function quickSort(arr, left, right) {
-    var len = arr.length,
-        pivot,
-        partitionIndex;
+    let pivot, partitionIndex;
 
     if (left < right) {
         pivot = right;

@@ -25,13 +25,14 @@ function doMerge(arrToSort, srtIdx, midIdx, endIdx, dupArr, animations) {
     let j = midIdx + 1;     // animation index 2
 
     while (i <= midIdx && j <= endIdx) {
+
         animations.push([i, j]);    // These are the values that we're comparing; we push them the first
         // time to change their color.
 
         animations.push([i, j]);    // These are the values that we're comparing; we push them a second
         // time to revert their color.
 
-        if (dupArr[i] <= dupArr[j]) {
+        if (dupArr[i] <= dupArr[j]) {       // if the 
             animations.push([k, dupArr[i]]);    // We overwrite the value at index k in the original array with the
             // value at index i in the dupped array. We are grabbing the smaller value
             arrToSort[k++] = dupArr[i++];
@@ -43,12 +44,14 @@ function doMerge(arrToSort, srtIdx, midIdx, endIdx, dupArr, animations) {
             arrToSort[k++] = dupArr[j++];
         }
     }
+
     while (i <= midIdx) {
         animations.push([i, i]);
         animations.push([i, i]);
         animations.push([k, dupArr[i]]);
         arrToSort[k++] = dupArr[i++];
     }
+
     while (j <= endIdx) {
         animations.push([j, j]);
         animations.push([j, j]);
