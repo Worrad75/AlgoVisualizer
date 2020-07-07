@@ -2,7 +2,7 @@ let animations = []
 
 function buildMaxHeap(array) {
     // console.log("in buildMaxHeap")
-    var i;
+    let i;
     i = array.length / 2 - 1;
     i = Math.floor(i);
 
@@ -14,7 +14,7 @@ function buildMaxHeap(array) {
 
 
 function heapify(heap, i, max) {
-    console.log("in heapify")
+    // console.log("in heapify")
     animations.push("heapify")
 
     var index, leftIdx, rightIdx;
@@ -45,7 +45,7 @@ function heapify(heap, i, max) {
 }
 
 function swap(items, idx1, idx2) {
-    console.log("in swap")
+    // console.log("in swap")
     animations.push("swap")
 
     let temp = items[idx1];
@@ -72,10 +72,11 @@ export function heapSort(array) {       // will return a list of animations
         heapify(array, 0, lastElement);
         
         lastElement -= 1
-        console.log("decrementing")
+        // console.log("decrementing")
         animations.push("decrement")
         
     }
-
-    return animations;
+    console.log(570 - Math.pow(array.length, 2))
+    return array;
+    // return animations;
 }
