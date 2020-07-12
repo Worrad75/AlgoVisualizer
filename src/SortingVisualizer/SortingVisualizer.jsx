@@ -5,7 +5,6 @@ import { quickSort } from '../algorithms/quickSort'
 import { heapSort } from '../algorithms/heapSort'
 import { getBubbleAnimations } from '../algorithms/bubbleSort'
 
-const NUMBER_OF_ARRAY_BARS = 20;
 const PRIMARY_COLOR = 'lightblue';
 const SECONDARY_COLOR = 'red';
 
@@ -16,7 +15,8 @@ export default class SortingVisualizer extends React.Component {
         this.state = {
             baseArray: [],
             sorting: false,
-            animationSpeedMS: 50
+            animationSpeedMS: 50,
+            array_bars: 25
         }
     }
 
@@ -27,7 +27,7 @@ export default class SortingVisualizer extends React.Component {
     resetArray(){
         const baseArray = [];
         const arrayBars = document.getElementsByClassName('array-bar');
-        for (let i = 0; i < NUMBER_OF_ARRAY_BARS; i++) {
+        for (let i = 0; i < this.state.array_bars; i++) {
             baseArray.push(Math.floor(Math.random() * (600 - 10 + 1) + 5));
             if(arrayBars[i]) arrayBars[i].style.backgroundColor = "lightblue";
         }
@@ -47,6 +47,11 @@ export default class SortingVisualizer extends React.Component {
 
     handleSpeedChange(e) {
         this.setState({ animationSpeedMS: e.target.value});
+    }
+
+    handleSizeChange(e) {
+        this.setState({ array_bars: e.target.value });
+        this.resetArray();
     }
 
     toggleButtons(toggle) {
@@ -72,7 +77,7 @@ export default class SortingVisualizer extends React.Component {
                 const [barOneIdx, barTwoIdx] = animationIndicies[i];    // get relevant indicies for each array bar
                 const barOneStyle = arrayBars[barOneIdx].style;         // isolate the style attribute of each array bar
                 const barTwoStyle = arrayBars[barTwoIdx].style;         // isolate the style attribute of each array bar
-                const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR; // 
+                const color = i % 3 === 0 ? SECONDARY_COLOR : PRIMARY_COLOR;
                 setTimeout(() => {
                     barOneStyle.backgroundColor = color;
                     barTwoStyle.backgroundColor = color;
@@ -86,36 +91,32 @@ export default class SortingVisualizer extends React.Component {
             }
             if (i === animationIndicies.length - 2) {
                 setTimeout(() => {
-                    this.toggleButtons("")
-                    this.showSuccess()
-                }, i * this.state.animationSpeedMS)
+                    this.toggleButtons("");
+                    this.showSuccess();
+                }, i * this.state.animationSpeedMS);
             }
             
         }          
     }
 
     quickSort(){
-        const result = quickSort(this.state.baseArray, 0, this.state.baseArray.length-1);
-        this.setState({baseArray:result})
+        const animations = quickSort(this.state.baseArray, 0, this.state.baseArray.length - 1); // will return animations
+        this.setState({ baseArray: animations }) // for testing
         this.toggleButtons("")  // enable buttons
     }
 
     heapSort(){
-        console.log("BASE ARRAY: " + this.state.baseArray)
-        const result = heapSort(this.state.baseArray);  // returns animations
-        console.log(result);
+        const animations = heapSort(this.state.baseArray);  // will return animations
+        this.setState({ baseArray: animations }) // for testing
         this.toggleButtons("")  // enable buttons
-        this.setState({ baseArray: result }) // for testing heaping algo
     }
 
     bubbleSort() {
-        console.log("BASE ARRAY: " + this.state.baseArray)
         const instructions = getBubbleAnimations(this.state.baseArray); // returns array of arrays in the format of [idx1, idx2, value1, value2]
         const arrayBars = document.getElementsByClassName('array-bar');
         let i = instructions.length - 1
 
-
-        setTimeout(() => {
+        setTimeout(() => {      // based on the number of items in the array, we can predict how long the animation will take
             this.toggleButtons("")
             this.showSuccess()
         }, i * this.state.animationSpeedMS + 10);
@@ -162,12 +163,17 @@ export default class SortingVisualizer extends React.Component {
                 <input type="range" name="slider" id="slider" min="10" max="100" onChange={(event) => this.handleSpeedChange(event)}/>
             </div>
 
+            <div>
+                Size of Array: {this.state.array_bars}
+                <input type="range" name="slider" id="slider" min="5" placeholder="25" max="50" onChange={(event) => this.handleSizeChange(event)} />
+            </div>
+
             <div className="array-cont">
                 {baseArray.map((val, idx) => (
                     <div    className="array-bar" id={idx} key={idx}
                             style={{
                                 backgroundColor: "lightblue",
-                                width: `${900/NUMBER_OF_ARRAY_BARS}px`,
+                                width: `${900 / this.state.array_bars}px`,
                                 height: `${val}px`}}>
                     </div>
                 ))}
