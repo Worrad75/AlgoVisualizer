@@ -49,9 +49,15 @@ export default class SortingVisualizer extends React.Component {
         this.setState({ animationSpeedMS: e.target.value});
     }
 
+
+
     handleSizeChange(e) {
-        this.setState({ array_bars: e.target.value }, this.resetArray());
+        this.setState({ array_bars: e.target.value},
+            () => this.resetArray());
     }
+
+
+
 
     toggleButtons(toggle) {
         const buttons = document.getElementsByClassName('button');
@@ -164,7 +170,7 @@ export default class SortingVisualizer extends React.Component {
 
             <div>
                 Size of Array: {this.state.array_bars}
-                <input type="range" name="slider" id="slider" min="10" max="50" onChange={(event) => this.handleSizeChange(event)} />
+                <input type="range" name="slider" id="slider" min="10" max="100" onChange={(event) => this.handleSizeChange(event)} />
             </div>
 
             <div className="array-cont">
