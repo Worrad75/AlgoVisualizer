@@ -16,7 +16,7 @@ export default class SortingVisualizer extends React.Component {
             baseArray: [],
             sorting: false,
             animationSpeedMS: 50,
-            array_bars: 25
+            array_bars: 50
         }
     }
 
@@ -50,8 +50,7 @@ export default class SortingVisualizer extends React.Component {
     }
 
     handleSizeChange(e) {
-        this.setState({ array_bars: e.target.value });
-        this.resetArray();
+        this.setState({ array_bars: e.target.value }, this.resetArray());
     }
 
     toggleButtons(toggle) {
@@ -165,7 +164,7 @@ export default class SortingVisualizer extends React.Component {
 
             <div>
                 Size of Array: {this.state.array_bars}
-                <input type="range" name="slider" id="slider" min="5" placeholder="25" max="50" onChange={(event) => this.handleSizeChange(event)} />
+                <input type="range" name="slider" id="slider" min="10" max="50" onChange={(event) => this.handleSizeChange(event)} />
             </div>
 
             <div className="array-cont">
