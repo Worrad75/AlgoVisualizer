@@ -104,3 +104,31 @@ function merge(left, right) {
         .concat(left.slice(leftIndex))
         .concat(right.slice(rightIndex));
 }
+
+
+/////////////
+
+function divide(collection) {
+    if (collection.length < 2) {
+        return collection;
+    } else {
+        let midpoint = Math.floor(collection.length / 2);
+        var left = collection.slice(0, midpoint);
+        var right = collection.slice(midpoint);
+    }
+    return merge(
+        divide(left), divide(right)
+    );
+}
+function merge(leftArr, rightArr) 
+    let sorted = [];
+    while (leftArr.length > 0 && rightArr.length > 0) {
+        if (leftArr[0] < rightArr[0]) {
+            let data = leftArr.shift();
+            sorted.push(data)
+        } else {
+            let data = rightArr.shift();
+            sorted.push(data)
+        }
+    return sorted.concat(leftArr).concat(rightArr);
+}
